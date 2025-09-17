@@ -86,7 +86,7 @@ def classify_sample(audio_data, samplerate):
     print(f"Predicted class: {predicted_label} with confidence: {confidence:.2f}")
 
 audio_rate = get_microphone_sample_rate()
-seconds = 1
+seconds = 0.5
 
 # print(sd.query_devices())
 sd.default.device = 9
@@ -96,12 +96,24 @@ def listen_audio():
     my_recording = sd.rec(int(seconds * audio_rate), samplerate=audio_rate, channels=1, dtype='float32')
     return my_recording
 
-voice = listen_audio()
-sleep(1)
+voice1 = listen_audio()
+sd.wait()
+voice2 = listen_audio()
+sd.wait()
 while True:
+    voice3 = listen_audio()
+    voice = np.concatenate((voice1, voice2))
     classify_sample(voice, audio_rate)
-    sf.write("my_recording5.wav", voice, audio_rate)
-    voice = listen_audio()
-    sleep(1)
+    sd.wait()
+    
+    voice1 = listen_audio()
+    voice = np.concatenate((voice2, voice3))
+    classify_sample(voice, audio_rate)
+    sd.wait()
+    
+    voice2 = listen_audio()
+    voice = np.concatenate((voice3, voice1))
+    classify_sample(voice, audio_rate)
+    sd.wait()
 
 print(voice)
