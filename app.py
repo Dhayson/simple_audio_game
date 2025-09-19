@@ -1,3 +1,4 @@
+from time import sleep
 import pygame
 import os
 import random
@@ -315,6 +316,8 @@ def main():
             reference_datetime = current_datetime
             voices.append(listen_audio())
             idx += 1
+        else:
+            sleep(0.03)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
