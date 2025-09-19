@@ -1,0 +1,1 @@
+Crédito jogo do dinosauro: https://github.com/MaxRohowsky/chrome-dinosaur de Max Rohowsky
